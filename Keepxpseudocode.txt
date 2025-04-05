@@ -1,0 +1,39 @@
+Algorithm: Find Optimal Restoration Sequence  
+Input:  
+    n ← number of buses and lines removed  
+    x ← number of sequences to store  
+Output:  
+    Sequence with lowest blackout value  
+
+1. Initialize curseq ← []  // Stores sequences with current blackout value, time, and criterion  
+// Initialize curseq with an empty sequence
+2. newseq ← []  
+
+3. FOR k = 1 TO (n-1) DO  
+    4. FOR each sequence seq in curseq DO  
+        5. FOR j = 1 TO n DO  
+            6. IF bus j is NOT in seq.sequence THEN  
+                7. toaddseq ← seq.sequence + bus j 
+                8. Compute getloadshed(toaddseq)  // Get load shed for restored substations  
+                9. Append toaddseq to newseq with updated criterion, blackout value, and restoration time  
+            10. END IF  
+        11. END FOR  
+    12. END FOR  
+
+    13. Sort newseq sequences by criterion (ascending order)  
+
+    14. IF k ≠ (n-1) THEN  
+        15. curseq ← newseq(1:x)  // Keep top x sequences  
+        16. newseq ← []  // Reset newseq for next iteration  
+    17. ELSE  
+        18. curseq ← newseq  // Keep all sequences  
+    19. END IF  
+20. END FOR  
+
+21. FOR each sequence seq in curseq DO  
+    22. Add the remaining bus to seq.sequence  
+    23. Update blackout value (assuming load shed after restoration is 0)  
+24. END FOR  
+
+25. Sort curseq by blackout value (ascending order)  
+26. RETURN sequence with the lowest blackout value		
